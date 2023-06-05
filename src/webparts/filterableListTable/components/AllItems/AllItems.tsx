@@ -1,8 +1,11 @@
-import { SPHttpClient } from "@microsoft/sp-http";
-import { IListItem } from "../ListItem/IListItem";
-import { DetailsList, DetailsListLayoutMode, Selection, IColumn } from 'office-ui-fabric-react/lib/DetailsList';
+// PATRIZIO
+// import { SPHttpClient } from "@microsoft/sp-http";
+// import { IListItem } from "../ListItem/IListItem";
+import { DetailsList, DetailsListLayoutMode, Selection } from 'office-ui-fabric-react/lib/DetailsList'; // , IColumn
 import { MarqueeSelection } from 'office-ui-fabric-react/lib/MarqueeSelection';
-import { autobind } from 'office-ui-fabric-react/lib/Utilities';
+// PATRIZIO
+// import { autobind } from 'office-ui-fabric-react/lib/Utilities';
+// https://github.com/microsoft/fluentui/wiki/TypeScript-Guidelines#use-arrow-functions-instead-of-bind
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import * as React from "react";
 import { IAllItemsProps } from "./IAllItemsProps";
@@ -14,7 +17,7 @@ import { IAllItemsState } from "./IAllItemsState";
 export default class AllItems extends React.Component<IAllItemsProps, IAllItemsState> {
   private _selection: Selection = undefined;
 
-  constructor(props) {
+  constructor(props: IAllItemsProps | undefined) {
     super(props);
 
     this._selection = new Selection({
@@ -40,11 +43,11 @@ export default class AllItems extends React.Component<IAllItemsProps, IAllItemsS
     }
   }
 
-  @autobind
+  
   private onChanged(text: any): void {
     this.props.filterItems(text);
   }
-  @autobind
+  
   private onItemInvoked(item: any): void {
     this.props.passItemToModal(item);
   }

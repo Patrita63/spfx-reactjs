@@ -1,15 +1,17 @@
 import { IListItem } from "./IListItem";
 import * as React from "react";
 import styles from '../FilterableListTable.module.scss';
-import { Button, DefaultButton, PrimaryButton, IButtonProps } from 'office-ui-fabric-react/lib/Button';
-import { autobind } from 'office-ui-fabric-react/lib/Utilities';
+import { Button, PrimaryButton } from 'office-ui-fabric-react/lib/Button'; // DefaultButton, , IButtonProps // PATRIZIO
+// PATRIZIO
+// import { autobind } from 'office-ui-fabric-react/lib/Utilities';
+// https://github.com/microsoft/fluentui/wiki/TypeScript-Guidelines#use-arrow-functions-instead-of-bind
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
 /*
   ListItem component handles the content for the Modal Dialog
 */
 export default class ListItem extends React.Component<{ listitem: IListItem, handleUpdate: any, handleCancel: any, handleDelete: any }, { title: string }> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     //binds the event handler for the Title text field. This is needed to update the 'state' of the Title after every change
     this.handleTitleChange = this.handleTitleChange.bind(this);

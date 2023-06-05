@@ -1,9 +1,11 @@
 import { SPHttpClient, SPHttpClientResponse } from "@microsoft/sp-http";
 import * as React from "react";
-import { autobind } from "office-ui-fabric-react/lib/Utilities";
+// PATRIZIO
+// import { autobind } from "office-ui-fabric-react/lib/Utilities";
+// https://github.com/microsoft/fluentui/wiki/TypeScript-Guidelines#use-arrow-functions-instead-of-bind
 import { IListItem } from "../ListItem/IListItem";
 import { IColumn } from "office-ui-fabric-react/lib/DetailsList";
-import pnp, { List, ItemUpdateResult} from 'sp-pnp-js';
+import pnp, { ItemUpdateResult} from 'sp-pnp-js';  // PATRIZIO List
 import ListItem from "../ListItem/ListItem";
 import AllItems from "../AllItems/AllItems";
 import { Dialog, DialogType } from "office-ui-fabric-react/lib/Dialog";
@@ -16,7 +18,7 @@ import { IBodyState } from "./IBodyState";
   returned from the REST call
 */
 export default class Body extends React.Component<IBodyProps, IBodyState> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     const _columns: IColumn[] = [
       {
@@ -77,7 +79,10 @@ export default class Body extends React.Component<IBodyProps, IBodyState> {
   //along with the URL of the current site.
   private loadItems() {
     console.log('Body.loadItems');
-    this.props.spHttpClient.get(`${this.props.siteUrl}/_api/web/lists/getbytitle('${this.props.listName}')/items?$select=Id,Title,Created,Modified`,
+    console.log('this.props.siteUrl: ' + this.props.siteUrl);
+    const pathList = `${this.props.siteUrl}/sites/Nextar/_api/web/lists/getbytitle('${this.props.listName}')/items?$select=Id,Title,Created,Modified`;
+    console.log('pathList: ' + pathList);
+    this.props.spHttpClient.get(pathList,
     SPHttpClient.configurations.v1,
       {
         headers: {
@@ -91,7 +96,7 @@ export default class Body extends React.Component<IBodyProps, IBodyState> {
         });
     });
   }
-  @autobind
+  
   private onColumnClick(evt: React.MouseEvent<HTMLElement>, column: IColumn) {
     const { columns, rows } = this.state;
     let newRows: IListItem[] = rows.slice();
@@ -113,32 +118,34 @@ export default class Body extends React.Component<IBodyProps, IBodyState> {
       rows: newRows
     });
   }
-  @autobind
+  
   private sortItems(items: IListItem[], sortBy: string, descending = false): IListItem[] {
     if (descending) {
       return items.sort((a: IListItem, b: IListItem) => {
-        if (a[sortBy] < b[sortBy]) {
+        // PATRIZIO
+        /* if (a[sortBy] < b[sortBy]) {
           return 1;
         }
         if (a[sortBy] > b[sortBy]) {
           return -1;
-        }
+        } */
         return 0;
       });
     } else {
       return items.sort((a: IListItem, b: IListItem) => {
-        if (a[sortBy] < b[sortBy]) {
+        // PATRIZIO
+       /*  if (a[sortBy] < b[sortBy]) {
           return -1;
         }
         if (a[sortBy] > b[sortBy]) {
           return 1;
-        }
+        } */
         return 0;
       });
     }
   }
   //Event handler that will open the Modal Dialog and set the item 'state' to the current list item.
-  public passItemToModal(item) {
+  public passItemToModal(item: any) {
     this.setState({
       detailModal: true,
       item: item
@@ -202,7 +209,7 @@ export default class Body extends React.Component<IBodyProps, IBodyState> {
     });
   }
   //Renders the contents to the Modal Dialog
-  public renderContents(item) {
+  public renderContents(item: any) {
     console.log('Body.renderContents item', item);
     return (<ListItem listitem={item} handleUpdate={this.onUpdate.bind(this)} handleCancel={this.closeDetailModal.bind(this)} handleDelete={this.onDelete.bind(this)} />);
   }

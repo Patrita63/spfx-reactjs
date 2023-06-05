@@ -1,5 +1,6 @@
 import { SPHttpClient } from '@microsoft/sp-http';
-import { IListItem } from '../ListItem/IListItem';
+// PATRIZIO
+// import { IListItem } from '../ListItem/IListItem';
 export interface IBodyProps {
   spHttpClient: SPHttpClient;
   siteUrl: string;
